@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "predev": "npm run i18n:generate",
-    "dev": "next dev",
+    "dev": "node scripts/generate-i18n.mjs --watch & next dev",
     "prebuild": "npm run i18n:generate",
     "build": "next build",
     "start": "next start",

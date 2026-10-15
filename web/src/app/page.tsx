@@ -1,10 +1,12 @@
-import { t } from "@/lib/i18n";
+import { getLocale, getTranslations } from "@/lib/i18n/server";
 
 // Placeholder until the signed-in user's name is available.
 const USER_NAME = "Plarent user";
 
-export default function HomePage() {
-  const weekday = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date());
+export default async function HomePage() {
+  const locale = await getLocale();
+  const t = await getTranslations();
+  const weekday = new Intl.DateTimeFormat(locale, { weekday: "long" }).format(new Date());
 
   return (
     <div className="flex w-full flex-col gap-content">

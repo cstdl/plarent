@@ -1,6 +1,6 @@
 "use client";
 
-import { t } from "@/lib/i18n";
+import { useTranslations } from "@/lib/i18n";
 
 export default function Error({
   error,
@@ -9,6 +9,8 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations();
+
   return (
     <div className="rounded-[14px] border border-accent/40 bg-boxes-secondary p-6 text-center">
       <p className="font-sans font-semibold text-accent">{t("error.title")}</p>

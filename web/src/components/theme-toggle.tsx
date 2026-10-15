@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { t } from "@/lib/i18n";
+import { useTranslations } from "@/lib/i18n";
 
 type Theme = "light" | "dark";
 type Listener = () => void;
@@ -29,6 +29,7 @@ function setTheme(theme: Theme) {
 
 export function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const t = useTranslations();
 
   return (
     <button

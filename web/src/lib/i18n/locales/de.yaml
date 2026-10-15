@@ -1,0 +1,10 @@
+# German translations. Missing keys fall back to en.yaml.
+nav:
+  myProfile: Mein Profil
+
+profile:
+  title: Mein Profil
+  language:
+    label: Sprache
+    en: English
+    de: Deutsch

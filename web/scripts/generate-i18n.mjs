@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, watch, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { load } from "js-yaml";
@@ -16,19 +16,38 @@ function assertOnlyStrings(node, keyPath) {
   }
 }
 
-const yamlFiles = readdirSync(localesDir).filter((file) => file.endsWith(".yaml"));
+function generate() {
+  const yamlFiles = readdirSync(localesDir).filter((file) => file.endsWith(".yaml"));
 
-for (const file of yamlFiles) {
-  const locale = path.basename(file, ".yaml");
-  const source = readFileSync(path.join(localesDir, file), "utf8");
-  const translations = load(source);
-  assertOnlyStrings(translations, "");
+  for (const file of yamlFiles) {
+    const locale = path.basename(file, ".yaml");
+    const source = readFileSync(path.join(localesDir, file), "utf8");
+    const translations = load(source);
+    assertOnlyStrings(translations, "");
 
-  const outputPath = path.join(localesDir, `${locale}.generated.ts`);
-  const contents = `// AUTO-GENERATED from ${file} by scripts/generate-i18n.mjs. Do not edit directly.
+    const outputPath = path.join(localesDir, `${locale}.generated.ts`);
+    const contents = `// AUTO-GENERATED from ${file} by scripts/generate-i18n.mjs. Do not edit directly.
 
 export const ${locale} = ${JSON.stringify(translations, null, 2)} as const;
 `;
-  writeFileSync(outputPath, contents);
-  console.log(`Generated ${path.relative(process.cwd(), outputPath)}`);
+    writeFileSync(outputPath, contents);
+    console.log(`Generated ${path.relative(process.cwd(), outputPath)}`);
+  }
+}
+
+generate();
+
+if (process.argv.includes("--watch")) {
+  let timer;
+  watch(localesDir, (_event, file) => {
+    if (!file?.endsWith(".yaml")) return;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      try {
+        generate();
+      } catch (error) {
+        console.error(error.message);
+      }
+    }, 100);
+  });
 }

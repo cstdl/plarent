@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, Quicksand } from "next/font/google";
 import { AppFooter } from "@/components/app-footer";
-import { AppHeader } from "@/components/app-header";
 import { LocaleProvider } from "@/lib/i18n";
 import { getLocale, getTranslations } from "@/lib/i18n/server";
 import "./globals.css";
@@ -59,7 +58,6 @@ export default async function RootLayout({
       <body>
         <LocaleProvider locale={locale}>
           <div className="min-h-screen pb-[calc(3rem+env(safe-area-inset-bottom))]">
-            <AppHeader />
             <main className="mx-auto max-w-3xl px-page-x py-8">{children}</main>
             <AppFooter />
           </div>

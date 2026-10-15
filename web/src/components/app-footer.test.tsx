@@ -37,7 +37,7 @@ describe("AppFooter", () => {
   it("renders four navigation links and a centered home logo", () => {
     render(<AppFooter />);
 
-    const nav = screen.getByRole("navigation", { name: "Main" });
+    const nav = screen.getByRole("navigation", { name: "Hauptnavigation" });
     const links = within(nav).getAllByRole("link");
 
     expect(links).toHaveLength(5);
@@ -49,40 +49,45 @@ describe("AppFooter", () => {
       "/profile",
     ]);
     expect(links.map((link) => link.textContent?.trim())).toEqual([
-      "My Plants",
-      "Task Calendar",
+      "Meine Pflanzen",
+      "Aufgaben-Kalender",
       "",
-      "Plärr Points",
-      "My Profile",
+      "Plärr-Points",
+      "Mein Profil",
     ]);
-    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
+    expect(screen.getByRole("link", { name: "Startseite" })).toHaveAttribute("href", "/");
   });
 
   it("uses the larger logo on the home screen", () => {
     render(<AppFooter />);
 
-    const home = screen.getByRole("link", { name: "Home" });
+    const home = screen.getByRole("link", { name: "Startseite" });
 
     expect(home).toHaveAttribute("aria-current", "page");
     expect(home).toHaveClass("h-[65px]", "w-[71px]");
-    expect(screen.getByRole("link", { name: /My Plants/ })).not.toHaveAttribute("aria-current");
+    expect(screen.getByRole("link", { name: /Meine Pflanzen/ })).not.toHaveAttribute(
+      "aria-current",
+    );
   });
 
   it("uses the smaller logo and highlights the active tab away from home", () => {
     usePathname.mockReturnValue("/profile");
     render(<AppFooter />);
 
-    expect(screen.getByRole("link", { name: "Home" })).toHaveClass("h-[47px]", "w-[51px]");
-    expect(screen.getByRole("link", { name: /My Profile/ })).toHaveClass("text-highlight");
+    expect(screen.getByRole("link", { name: "Startseite" })).toHaveClass("h-[47px]", "w-[51px]");
+    expect(screen.getByRole("link", { name: /Mein Profil/ })).toHaveClass("text-highlight");
   });
 
   it("highlights My Plants on plant pages", () => {
     usePathname.mockReturnValue("/plants/1");
     render(<AppFooter />);
 
-    const myPlants = screen.getByRole("link", { name: /My Plants/ });
+    const myPlants = screen.getByRole("link", { name: /Meine Pflanzen/ });
 
-    expect(screen.getByRole("link", { name: "Home" })).toHaveClass("h-[47px]", "w-[51px]");
+    expect(screen.getByRole("link", { name: "Startseite" })).toHaveClass(
+      "h-[47px]",
+      "w-[51px]",
+    );
     expect(myPlants).toHaveAttribute("aria-current", "page");
     expect(myPlants).toHaveClass("text-highlight");
   });
@@ -91,13 +96,13 @@ describe("AppFooter", () => {
     usePathname.mockReturnValue("/profile");
     render(<AppFooter />);
 
-    const nav = screen.getByRole("navigation", { name: "Main" });
+    const nav = screen.getByRole("navigation", { name: "Hauptnavigation" });
 
-    expect(within(nav).getByRole("link", { name: /My Profile/ })).toHaveAttribute(
+    expect(within(nav).getByRole("link", { name: /Mein Profil/ })).toHaveAttribute(
       "aria-current",
       "page",
     );
-    expect(within(nav).getByRole("link", { name: /My Plants/ })).not.toHaveAttribute(
+    expect(within(nav).getByRole("link", { name: /Meine Pflanzen/ })).not.toHaveAttribute(
       "aria-current",
     );
   });

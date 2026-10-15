@@ -1,0 +1,58 @@
+common:
+  appName: Plarent
+  appTagline: Verwalte und pflege deine Zimmerpflanzen
+  addPlant: Pflanze hinzufügen
+  backToPlants: Zurück zu den Pflanzen
+  cancel: Abbrechen
+  home: Startseite
+  mainNavigation: Hauptnavigation
+  theme:
+    switchToLight: Zum hellen Modus wechseln
+    switchToDark: Zum dunklen Modus wechseln
+
+home:
+  greeting: "Guten Morgen, {{name}}!"
+  dayTitle: "Dein {{weekday}} bisher"
+  allDone: "Du hast alle Aufgaben für heute erledigt"
+
+nav:
+  myPlants: Meine Pflanzen
+  taskCalendar: Aufgaben-Kalender
+  plaerrPoints: Plärr-Points
+  myProfile: Mein Profil
+
+calendar:
+  title: Kalender
+  taskSingular: "{{count}} Aufgabe"
+  taskPlural: "{{count}} Aufgaben"
+
+plants:
+  list:
+    empty: Noch keine Pflanzen vorhanden.
+    addFirst: Füge deine erste Pflanze hinzu
+    location: "📍 {{location}}"
+  detail:
+    location: Standort
+    acquired: Erworben
+    notes: Notizen
+    notFound: Diese Pflanze wurde nicht gefunden.
+  new:
+    title: Pflanze hinzufügen
+    nameLabel: Name
+    speciesLabel: Art
+    speciesPlaceholder: Monstera deliciosa
+    locationLabel: Standort
+    locationPlaceholder: Wohnzimmerfenster
+    acquiredDateLabel: Erwerbsdatum
+    notesLabel: Notizen
+    save: Pflanze speichern
+  delete:
+    button: Pflanze löschen
+    title: Pflanze löschen
+    confirmMessage: "Möchtest du {{name}} wirklich löschen? Dies kann nicht rückgängig gemacht werden."
+    confirm: Löschen
+    confirming: Wird gelöscht…
+
+error:
+  title: Etwas ist schiefgelaufen
+  retry: Erneut versuchen

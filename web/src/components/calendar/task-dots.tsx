@@ -1,3 +1,5 @@
+import { t } from "@/lib/i18n";
+
 export type TaskCounts = {
   overdue: number;
   open: number;
@@ -23,7 +25,9 @@ export function TaskDots({ counts }: TaskDotsProps) {
   return (
     <span
       role="img"
-      aria-label={`${total} ${total === 1 ? "task" : "tasks"}`}
+      aria-label={t(total === 1 ? "calendar.taskSingular" : "calendar.taskPlural", {
+        count: total,
+      })}
       className="flex h-1.5 items-center justify-center gap-1"
     >
       <span aria-hidden="true" className="contents">

@@ -20,13 +20,13 @@ describe("TaskDots", () => {
     const { container } = render(<TaskDots counts={{ overdue: 1, open: 1 }} />);
 
     expect(visibleDots(container)).toHaveLength(2);
-    expect(screen.getByRole("img", { name: "2 tasks" })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "2 Aufgaben" })).toBeInTheDocument();
   });
 
   it("renders at most three dots while announcing the full count", () => {
     const { container } = render(<TaskDots counts={{ overdue: 2, open: 5 }} />);
 
     expect(visibleDots(container)).toHaveLength(3);
-    expect(screen.getByRole("img", { name: "7 tasks" })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "7 Aufgaben" })).toBeInTheDocument();
   });
 });

@@ -9,8 +9,8 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.mockito.kotlin.any
@@ -71,11 +71,11 @@ class PlantControllerTest {
         val id = UUID.randomUUID()
         val request = UpdatePlantRequest(name = "Monty", species = "Monstera deliciosa", location = "Kitchen")
         whenever(plantService.updatePlant(eq(id), any())).thenReturn(
-            Plant(id = id, name = request.name, species = request.species, location = request.location),
+            Plant(id = id, name = "Monty", species = "Monstera deliciosa", location = "Kitchen"),
         )
 
         mockMvc.perform(
-            put("/api/plants/$id")
+            patch("/api/plants/$id")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)),
         )
@@ -91,11 +91,21 @@ class PlantControllerTest {
         val request = UpdatePlantRequest(name = "Monty", species = "Monstera deliciosa")
 
         mockMvc.perform(
-            put("/api/plants/$id")
+            patch("/api/plants/$id")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)),
         )
             .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun `rejects a blank name on update`() {
+        mockMvc.perform(
+            patch("/api/plants/${UUID.randomUUID()}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""{"name": "  "}"""),
+        )
+            .andExpect(status().isBadRequest)
     }
 
     @Test

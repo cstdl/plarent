@@ -1,6 +1,7 @@
 package com.plarent.backend.plant
 
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
 import java.time.Instant
 import java.time.LocalDate
@@ -48,14 +49,15 @@ data class CreatePlantRequest(
     val notes: String? = null,
 )
 
+// Partial update: a null (or missing) field is left unchanged. A blank location or notes clears it.
 data class UpdatePlantRequest(
-    @field:NotBlank
+    @field:Pattern(regexp = "(?s).*\\S.*", message = "must not be blank")
     @field:Size(max = 100)
-    val name: String,
+    val name: String? = null,
 
-    @field:NotBlank
+    @field:Pattern(regexp = "(?s).*\\S.*", message = "must not be blank")
     @field:Size(max = 150)
-    val species: String,
+    val species: String? = null,
 
     @field:Size(max = 150)
     val location: String? = null,

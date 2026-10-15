@@ -42,9 +42,9 @@ export async function createPlant(input: PlantInput): Promise<Plant> {
   return res.json();
 }
 
-export async function updatePlant(id: string, input: PlantInput): Promise<Plant> {
+export async function updatePlant(id: string, input: Partial<PlantInput>): Promise<Plant> {
   const res = await fetch(`${API_URL}/plants/${id}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
   });

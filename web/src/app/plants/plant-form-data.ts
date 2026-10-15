@@ -11,9 +11,11 @@ export function parsePlantForm(formData: FormData): PlantInput {
     throw new Error("Species is required");
   }
 
+  // Fields the form does not render stay undefined, so an update leaves them unchanged.
+  // A field left empty is sent as "", which the API stores as null.
   const optional = (field: string): string | undefined => {
-    const value = String(formData.get(field) ?? "").trim();
-    return value.length > 0 ? value : undefined;
+    const value = formData.get(field);
+    return value === null ? undefined : String(value).trim();
   };
 
   return {

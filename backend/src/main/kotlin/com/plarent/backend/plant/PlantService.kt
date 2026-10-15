@@ -27,11 +27,11 @@ class PlantService(
 
     fun updatePlant(id: UUID, request: UpdatePlantRequest): Plant {
         val plant = getPlant(id)
-        plant.name = request.name.trim()
-        plant.species = request.species.trim()
-        plant.location = request.location?.trim()?.ifBlank { null }
-        plant.acquiredDate = request.acquiredDate
-        plant.notes = request.notes?.trim()?.ifBlank { null }
+        request.name?.let { plant.name = it.trim() }
+        request.species?.let { plant.species = it.trim() }
+        request.location?.let { plant.location = it.trim().ifBlank { null } }
+        request.acquiredDate?.let { plant.acquiredDate = it }
+        request.notes?.let { plant.notes = it.trim().ifBlank { null } }
         plant.updatedAt = Instant.now()
         return plantRepository.save(plant)
     }

@@ -30,10 +30,6 @@ export function PlantForm({
         defaultValue={plant?.location ?? undefined}
       />
 
-      {/* Not editable in this design, but sent back so saving does not clear them. */}
-      {plant?.acquiredDate && <input type="hidden" name="acquiredDate" value={plant.acquiredDate} />}
-      {plant?.notes && <input type="hidden" name="notes" value={plant.notes} />}
-
       {/* The API has no care schedule yet, so these intervals are not saved. */}
       <fieldset className="flex flex-col gap-3 rounded-[20px] border border-secondary px-[14px] py-4">
         <IntervalField name="watering" label={t("plants.new.wateringLabel")} />

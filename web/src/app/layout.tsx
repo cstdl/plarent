@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, Quicksand } from "next/font/google";
 import { AppFooter } from "@/components/app-footer";
 import { AppHeader } from "@/components/app-header";
-import { t } from "@/lib/i18n";
+import { locale, t } from "@/lib/i18n";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -43,7 +43,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
       className={`${inter.variable} ${quicksand.variable} ${playfairDisplay.variable}`}
     >
@@ -51,7 +51,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
-        <div className="min-h-screen pb-24">
+        <div className="min-h-screen pb-[calc(3rem+env(safe-area-inset-bottom))]">
           <AppHeader />
           <main className="mx-auto max-w-3xl px-page-x py-8">{children}</main>
           <AppFooter />

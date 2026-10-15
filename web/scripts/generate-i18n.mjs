@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, watch, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, watch, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { load } from "js-yaml";
@@ -30,14 +30,17 @@ function generate() {
 
 export const ${locale} = ${JSON.stringify(translations, null, 2)} as const;
 `;
+    // Skip unchanged output so the dev server isn't triggered by no-op rewrites.
+    if (existsSync(outputPath) && readFileSync(outputPath, "utf8") === contents) continue;
     writeFileSync(outputPath, contents);
     console.log(`Generated ${path.relative(process.cwd(), outputPath)}`);
   }
 }
 
-generate();
-
-if (process.argv.includes("--watch")) {
+// In --watch mode the initial generation already ran via `predev`.
+if (!process.argv.includes("--watch")) {
+  generate();
+} else {
   let timer;
   watch(localesDir, (_event, file) => {
     if (!file?.endsWith(".yaml")) return;

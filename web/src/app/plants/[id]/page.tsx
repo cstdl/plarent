@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { getPlant } from "@/lib/api";
 import { getTranslations } from "@/lib/i18n/server";
+import { BackLink, PlantForm } from "../plant-form";
+import { updatePlantAction } from "./actions";
 import { DeletePlantButton } from "./delete-plant-button";
 
-export default async function PlantDetailPage({
+export default async function EditPlantPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -18,33 +19,16 @@ export default async function PlantDetailPage({
   }
 
   return (
-    <div className="rounded-[14px] border border-secondary/30 bg-boxes-secondary p-6 shadow-[0_5px_16px_rgba(53,66,56,0.07)]">
+    <div className="flex flex-col gap-content">
       <div className="flex items-center justify-between">
-        <Link href="/plants" className="text-sm text-secondary-title underline underline-offset-2">
-          ← {t("common.backToPlants")}
-        </Link>
+        <BackLink href="/plants" />
         <DeletePlantButton plantId={plant.id} plantName={plant.name} />
       </div>
-      <h1 className="type-title mt-3 text-primary">{plant.name}</h1>
-      <p className="italic text-secondary">{plant.species}</p>
 
-      <dl className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div>
-          <dt className="type-small text-secondary">{t("plants.detail.location")}</dt>
-          <dd className="text-primary">{plant.location ?? "—"}</dd>
-        </div>
-        <div>
-          <dt className="type-small text-secondary">{t("plants.detail.acquired")}</dt>
-          <dd className="text-primary">{plant.acquiredDate ?? "—"}</dd>
-        </div>
-      </dl>
+      <h1 className="type-title text-primary">{t("plants.edit.title")}</h1>
+      <p className="type-body text-primary">{t("plants.edit.intro", { name: plant.name })}</p>
 
-      {plant.notes && (
-        <div className="mt-6">
-          <dt className="type-small text-secondary">{t("plants.detail.notes")}</dt>
-          <dd className="whitespace-pre-wrap text-primary">{plant.notes}</dd>
-        </div>
-      )}
+      <PlantForm action={updatePlantAction.bind(null, plant.id)} plant={plant} />
     </div>
   );
 }

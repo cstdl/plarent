@@ -1,7 +1,6 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { useTranslations } from "@/lib/i18n";
 
 export type Theme = "light" | "dark";
 type Listener = () => void;
@@ -63,21 +62,5 @@ export function MoonIcon({ className = "size-5" }: { className?: string }) {
     >
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
-  );
-}
-
-export function ThemeToggle() {
-  const theme = useTheme();
-  const t = useTranslations();
-
-  return (
-    <button
-      type="button"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      aria-label={theme === "dark" ? t("common.theme.switchToLight") : t("common.theme.switchToDark")}
-      className="rounded-full p-2 text-secondary hover:bg-boxes-primary"
-    >
-      {theme === "dark" ? <SunIcon /> : <MoonIcon />}
-    </button>
   );
 }

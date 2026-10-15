@@ -9,7 +9,7 @@ export interface Plant {
   updatedAt: string;
 }
 
-export interface CreatePlantInput {
+export interface PlantInput {
   name: string;
   species: string;
   location?: string;

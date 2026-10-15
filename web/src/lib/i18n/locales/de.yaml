@@ -29,24 +29,30 @@ calendar:
 
 plants:
   list:
-    empty: Noch keine Pflanzen vorhanden.
-    addFirst: Füge deine erste Pflanze hinzu
-    location: "📍 {{location}}"
+    title: Meine Pflanzen
+    intro: "Leg los und füge deine erste Pflanze hinzu! 🌱 Dein grünes Abenteuer beginnt mit einem kleinen Schritt."
+    addPlant: neue Pflanze hinzufügen
   detail:
-    location: Standort
-    acquired: Erworben
-    notes: Notizen
     notFound: Diese Pflanze wurde nicht gefunden.
   new:
-    title: Pflanze hinzufügen
-    nameLabel: Name
-    speciesLabel: Art
-    speciesPlaceholder: Monstera deliciosa
-    locationLabel: Standort
-    locationPlaceholder: Wohnzimmerfenster
-    acquiredDateLabel: Erwerbsdatum
-    notesLabel: Notizen
-    save: Pflanze speichern
+    back: zurück
+    title: Neue Pflanze hinzufügen
+    intro: "Leg los und füge deine erste Pflanze hinzu! 🌱 Dein grünes Abenteuer beginnt mit einem kleinen Schritt."
+    addImage: Foto hinzufügen
+    namePlaceholder: Name der Pflanze
+    speciesPlaceholder: Art
+    locationPlaceholder: Standort
+    wateringLabel: "Diese Pflanze gießen:"
+    mistingLabel: "Diese Pflanze besprühen:"
+    every: alle
+    intervalAmount: Intervall
+    intervalUnit: Einheit
+    days: Tage
+    weeks: Wochen
+    save: Speichern
+  edit:
+    title: Pflanze bearbeiten
+    intro: "Aktualisiere die Details von {{name}}. 🌿"
   delete:
     button: Pflanze löschen
     title: Pflanze löschen

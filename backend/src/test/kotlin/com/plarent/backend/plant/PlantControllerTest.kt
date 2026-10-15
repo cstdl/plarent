@@ -9,10 +9,12 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import java.util.UUID
@@ -62,6 +64,48 @@ class PlantControllerTest {
         )
             .andExpect(status().isCreated)
             .andExpect(jsonPath("$.name").value("Monstera"))
+    }
+
+    @Test
+    fun `updates a plant`() {
+        val id = UUID.randomUUID()
+        val request = UpdatePlantRequest(name = "Monty", species = "Monstera deliciosa", location = "Kitchen")
+        whenever(plantService.updatePlant(eq(id), any())).thenReturn(
+            Plant(id = id, name = "Monty", species = "Monstera deliciosa", location = "Kitchen"),
+        )
+
+        mockMvc.perform(
+            patch("/api/plants/$id")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)),
+        )
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$.name").value("Monty"))
+            .andExpect(jsonPath("$.location").value("Kitchen"))
+    }
+
+    @Test
+    fun `returns 404 when updating unknown plant`() {
+        val id = UUID.randomUUID()
+        whenever(plantService.updatePlant(eq(id), any())).thenThrow(PlantNotFoundException(id))
+        val request = UpdatePlantRequest(name = "Monty", species = "Monstera deliciosa")
+
+        mockMvc.perform(
+            patch("/api/plants/$id")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)),
+        )
+            .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun `rejects a blank name on update`() {
+        mockMvc.perform(
+            patch("/api/plants/${UUID.randomUUID()}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""{"name": "  "}"""),
+        )
+            .andExpect(status().isBadRequest)
     }
 
     @Test

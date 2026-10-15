@@ -1,6 +1,6 @@
 "use client";
 
-import { MoonIcon, setTheme, SunIcon, type Theme, useTheme } from "@/components/theme-toggle";
+import { MoonIcon, setTheme, SunIcon, type Theme, useTheme } from "@/components/theme";
 import { useTranslations } from "@/lib/i18n";
 
 const OPTIONS: { theme: Theme; Icon: typeof SunIcon }[] = [

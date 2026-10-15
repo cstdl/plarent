@@ -5,6 +5,7 @@ common:
   backToPlants: Back to plants
   cancel: Cancel
   home: Home
+  mainNavigation: Main navigation
   theme:
     switchToLight: Switch to light mode
     switchToDark: Switch to dark mode
@@ -19,6 +20,11 @@ nav:
   taskCalendar: Task Calendar
   plaerrPoints: Plärr Points
   myProfile: My Profile
+
+calendar:
+  title: Calendar
+  taskSingular: "{{count}} task"
+  taskPlural: "{{count}} tasks"
 
 plants:
   list:

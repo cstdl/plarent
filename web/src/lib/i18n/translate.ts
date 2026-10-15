@@ -2,7 +2,8 @@ import type { Locale } from "./config";
 import { de } from "./locales/de.generated";
 import { en } from "./locales/en.generated";
 
-type Translations = typeof en;
+type TranslationShape<T> = T extends string ? string : { [K in keyof T]: TranslationShape<T[K]> };
+type Translations = TranslationShape<typeof en>;
 
 type DotPaths<T> = T extends string
   ? never

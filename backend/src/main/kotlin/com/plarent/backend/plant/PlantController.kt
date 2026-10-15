@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -29,6 +30,10 @@ class PlantController(
     @ResponseStatus(HttpStatus.CREATED)
     fun createPlant(@Valid @RequestBody request: CreatePlantRequest): PlantResponse =
         PlantResponse.from(plantService.createPlant(request))
+
+    @PutMapping("/{id}")
+    fun updatePlant(@PathVariable id: UUID, @Valid @RequestBody request: UpdatePlantRequest): PlantResponse =
+        PlantResponse.from(plantService.updatePlant(id, request))
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

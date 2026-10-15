@@ -1,4 +1,4 @@
-import type { CreatePlantInput, Plant } from "./types";
+import type { PlantInput, Plant } from "./types";
 
 const API_URL = process.env.API_URL ?? "http://localhost:8080/api";
 
@@ -30,7 +30,7 @@ export async function getPlant(id: string): Promise<Plant | null> {
   return res.json();
 }
 
-export async function createPlant(input: CreatePlantInput): Promise<Plant> {
+export async function createPlant(input: PlantInput): Promise<Plant> {
   const res = await fetch(`${API_URL}/plants`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -38,6 +38,18 @@ export async function createPlant(input: CreatePlantInput): Promise<Plant> {
   });
   if (!res.ok) {
     throw new ApiError(`Failed to create plant (${res.status})`, res.status);
+  }
+  return res.json();
+}
+
+export async function updatePlant(id: string, input: PlantInput): Promise<Plant> {
+  const res = await fetch(`${API_URL}/plants/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!res.ok) {
+    throw new ApiError(`Failed to update plant ${id} (${res.status})`, res.status);
   }
   return res.json();
 }

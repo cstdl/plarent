@@ -28,24 +28,30 @@ calendar:
 
 plants:
   list:
-    empty: No plants yet.
-    addFirst: Add your first plant
-    location: "📍 {{location}}"
+    title: My Plants
+    intro: "Get started and add your first plant! 🌱 Your green adventure begins with a small step."
+    addPlant: add new plant
   detail:
-    location: Location
-    acquired: Acquired
-    notes: Notes
     notFound: We couldn't find that plant.
   new:
-    title: Add a plant
-    nameLabel: Name
-    speciesLabel: Species
-    speciesPlaceholder: Monstera deliciosa
-    locationLabel: Location
-    locationPlaceholder: Living room window
-    acquiredDateLabel: Acquired date
-    notesLabel: Notes
-    save: Save plant
+    back: back
+    title: Add a new plant
+    intro: "Get started and add your first plant! 🌱 Your green adventure begins with a small step."
+    addImage: Add photo
+    namePlaceholder: Plant name
+    speciesPlaceholder: Species
+    locationPlaceholder: Location
+    wateringLabel: "Water this plant:"
+    mistingLabel: "Mist this plant:"
+    every: every
+    intervalAmount: Interval
+    intervalUnit: Unit
+    days: days
+    weeks: weeks
+    save: Save
+  edit:
+    title: Edit plant
+    intro: "Update the details of {{name}}. 🌿"
   delete:
     button: Delete plant
     title: Delete plant

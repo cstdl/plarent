@@ -47,3 +47,21 @@ data class CreatePlantRequest(
     @field:Size(max = 2000)
     val notes: String? = null,
 )
+
+data class UpdatePlantRequest(
+    @field:NotBlank
+    @field:Size(max = 100)
+    val name: String,
+
+    @field:NotBlank
+    @field:Size(max = 150)
+    val species: String,
+
+    @field:Size(max = 150)
+    val location: String? = null,
+
+    val acquiredDate: LocalDate? = null,
+
+    @field:Size(max = 2000)
+    val notes: String? = null,
+)

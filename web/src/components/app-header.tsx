@@ -5,10 +5,13 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { t } from "@/lib/i18n";
 
+// Screens whose design has no header bar.
+const HIDDEN_ON = [/^\/$/, /^\/plants(\/[^/]+)?$/];
+
 export function AppHeader() {
   const pathname = usePathname();
 
-  if (pathname === "/") {
+  if (HIDDEN_ON.some((pattern) => pattern.test(pathname))) {
     return null;
   }
 

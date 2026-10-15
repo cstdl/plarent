@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getPlant } from "@/lib/api";
-import { t } from "@/lib/i18n";
+import { getTranslations } from "@/lib/i18n/server";
 import { BackLink, PlantForm } from "../plant-form";
 import { updatePlantAction } from "./actions";
 import { DeletePlantButton } from "./delete-plant-button";
@@ -10,6 +10,7 @@ export default async function EditPlantPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const t = await getTranslations();
   const { id } = await params;
   const plant = await getPlant(id);
 

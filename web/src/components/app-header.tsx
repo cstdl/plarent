@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { t } from "@/lib/i18n";
+import { useTranslations } from "@/lib/i18n";
 
 // Screens whose design has no header bar.
 const HIDDEN_ON = [/^\/$/, /^\/plants(\/[^/]+)?$/];
 
 export function AppHeader() {
   const pathname = usePathname();
+  const t = useTranslations();
 
   if (HIDDEN_ON.some((pattern) => pattern.test(pathname))) {
     return null;

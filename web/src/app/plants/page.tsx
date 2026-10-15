@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { getPlants } from "@/lib/api";
-import { t } from "@/lib/i18n";
+import { getTranslations } from "@/lib/i18n/server";
 import { PlantCard } from "./plant-card";
 
 export default async function PlantsPage() {
+  const t = await getTranslations();
   const plants = await getPlants();
 
   return (

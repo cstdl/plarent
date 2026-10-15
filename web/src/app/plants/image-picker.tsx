@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { t } from "@/lib/i18n";
+import { useTranslations } from "@/lib/i18n";
 
 // Preview only: the API cannot store plant images yet, so the file input has no name and is not submitted.
 export function ImagePicker() {
+  const t = useTranslations();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {

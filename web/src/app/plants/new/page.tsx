@@ -1,8 +1,10 @@
-import { t } from "@/lib/i18n";
+import { getTranslations } from "@/lib/i18n/server";
 import { BackLink, PlantForm } from "../plant-form";
 import { createPlantAction } from "./actions";
 
-export default function NewPlantPage() {
+export default async function NewPlantPage() {
+  const t = await getTranslations();
+
   return (
     <div className="flex flex-col gap-content">
       <BackLink href="/plants" />

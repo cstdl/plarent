@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/logo";
-import { t, type TranslationKey } from "@/lib/i18n";
+import { type TranslationKey, useTranslations } from "@/lib/i18n";
 
 type FooterLink = {
   href: string;
@@ -22,6 +22,7 @@ const RIGHT_LINKS: FooterLink[] = [
 ];
 
 function FooterLinkItem({ item, pathname }: { item: FooterLink; pathname: string }) {
+  const t = useTranslations();
   const label = t(item.labelKey);
   const active = isTabActive(pathname, item.href);
 
@@ -46,6 +47,7 @@ function isTabActive(pathname: string, href: string): boolean {
 
 export function AppFooter() {
   const pathname = usePathname();
+  const t = useTranslations();
   const isHome = pathname === "/";
 
   return (

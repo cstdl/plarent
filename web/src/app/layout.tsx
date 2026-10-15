@@ -2,13 +2,17 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, Quicksand } from "next/font/google";
 import { AppFooter } from "@/components/app-footer";
 import { AppHeader } from "@/components/app-header";
-import { locale, t } from "@/lib/i18n";
+import { LocaleProvider } from "@/lib/i18n";
+import { getLocale, getTranslations } from "@/lib/i18n/server";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: t("common.appName"),
-  description: t("common.appTagline"),
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+  return {
+    title: t("common.appName"),
+    description: t("common.appTagline"),
+  };
+}
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,11 +40,13 @@ const themeInitScript = `
 })();
 `;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
     <html
       lang={locale}
@@ -51,11 +57,13 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
-        <div className="min-h-screen pb-[calc(3rem+env(safe-area-inset-bottom))]">
-          <AppHeader />
-          <main className="mx-auto max-w-3xl px-page-x py-8">{children}</main>
-          <AppFooter />
-        </div>
+        <LocaleProvider locale={locale}>
+          <div className="min-h-screen pb-[calc(3rem+env(safe-area-inset-bottom))]">
+            <AppHeader />
+            <main className="mx-auto max-w-3xl px-page-x py-8">{children}</main>
+            <AppFooter />
+          </div>
+        </LocaleProvider>
       </body>
     </html>
   );

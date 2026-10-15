@@ -62,3 +62,10 @@ plants:
 error:
   title: Something went wrong
   retry: Try again
+
+profile:
+  title: My Profile
+  language:
+    label: Language
+    en: English
+    de: Deutsch

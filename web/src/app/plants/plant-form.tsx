@@ -1,16 +1,19 @@
 import Link from "next/link";
-import { t } from "@/lib/i18n";
+import type { Translator } from "@/lib/i18n";
+import { getTranslations } from "@/lib/i18n/server";
 import type { Plant } from "@/lib/types";
 import { ImagePicker } from "./image-picker";
 
 // Shared by the new and edit screens. When `plant` is given, the fields start with its values.
-export function PlantForm({
+export async function PlantForm({
   action,
   plant,
 }: {
   action: (formData: FormData) => Promise<void>;
   plant?: Plant;
 }) {
+  const t = await getTranslations();
+
   return (
     <form action={action} className="flex flex-col gap-[14px]">
       <div className="flex justify-end">
@@ -32,8 +35,8 @@ export function PlantForm({
 
       {/* The API has no care schedule yet, so these intervals are not saved. */}
       <fieldset className="flex flex-col gap-3 rounded-[20px] border border-secondary px-[14px] py-4">
-        <IntervalField name="watering" label={t("plants.new.wateringLabel")} />
-        <IntervalField name="misting" label={t("plants.new.mistingLabel")} />
+        <IntervalField name="watering" label={t("plants.new.wateringLabel")} t={t} />
+        <IntervalField name="misting" label={t("plants.new.mistingLabel")} t={t} />
       </fieldset>
 
       <button
@@ -46,7 +49,9 @@ export function PlantForm({
   );
 }
 
-export function BackLink({ href }: { href: string }) {
+export async function BackLink({ href }: { href: string }) {
+  const t = await getTranslations();
+
   return (
     <Link
       href={href}
@@ -82,7 +87,7 @@ function TextField({
   );
 }
 
-function IntervalField({ name, label }: { name: string; label: string }) {
+function IntervalField({ name, label, t }: { name: string; label: string; t: Translator }) {
   const pill =
     "h-5 rounded-full leading-none border border-secondary bg-transparent text-center text-secondary outline-none focus:border-secondary-title focus:ring-1 focus:ring-secondary-title";
 

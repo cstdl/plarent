@@ -1,9 +1,11 @@
-import { locale, t } from "@/lib/i18n";
+import { getLocale, getTranslations } from "@/lib/i18n/server";
 
 // Placeholder until the signed-in user's name is available.
 const USER_NAME = "Plarent user";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const locale = await getLocale();
+  const t = await getTranslations();
   const weekday = new Intl.DateTimeFormat(locale, { weekday: "long" }).format(new Date());
 
   return (

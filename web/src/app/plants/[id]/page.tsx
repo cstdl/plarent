@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPlant } from "@/lib/api";
-import { t } from "@/lib/i18n";
+import { getTranslations } from "@/lib/i18n/server";
 import { DeletePlantButton } from "./delete-plant-button";
 
 export default async function PlantDetailPage({
@@ -9,6 +9,7 @@ export default async function PlantDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const t = await getTranslations();
   const { id } = await params;
   const plant = await getPlant(id);
 

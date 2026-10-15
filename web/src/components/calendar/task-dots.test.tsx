@@ -10,21 +10,21 @@ function visibleDots(container: HTMLElement) {
 
 describe("TaskDots", () => {
   it("renders no dots when there are no tasks", () => {
-    const { container } = render(<TaskDots counts={{ overdue: 0, open: 0 }} />);
+    const { container } = render(<TaskDots counts={{ overdue: 0, open: 0 }} locale="de" />);
 
     expect(visibleDots(container)).toHaveLength(0);
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
   });
 
   it("renders one dot per task below the limit", () => {
-    const { container } = render(<TaskDots counts={{ overdue: 1, open: 1 }} />);
+    const { container } = render(<TaskDots counts={{ overdue: 1, open: 1 }} locale="de" />);
 
     expect(visibleDots(container)).toHaveLength(2);
     expect(screen.getByRole("img", { name: "2 Aufgaben" })).toBeInTheDocument();
   });
 
   it("renders at most three dots while announcing the full count", () => {
-    const { container } = render(<TaskDots counts={{ overdue: 2, open: 5 }} />);
+    const { container } = render(<TaskDots counts={{ overdue: 2, open: 5 }} locale="de" />);
 
     expect(visibleDots(container)).toHaveLength(3);
     expect(screen.getByRole("img", { name: "7 Aufgaben" })).toBeInTheDocument();

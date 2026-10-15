@@ -1,10 +1,12 @@
 import { connection } from "next/server";
 import { CalendarMonth } from "@/components/calendar/calendar-month";
 import { getUpcomingMonths } from "@/lib/calendar";
-import { t } from "@/lib/i18n";
+import { getLocale, getTranslations } from "@/lib/i18n/server";
 
 export default async function CalendarPage() {
   await connection();
+  const locale = await getLocale();
+  const t = await getTranslations();
 
   const months = getUpcomingMonths(new Date());
 
@@ -13,7 +15,7 @@ export default async function CalendarPage() {
       <h1 className="type-headline mb-6 text-accent">{t("calendar.title")}</h1>
       <div className="flex flex-col gap-8">
         {months.map(({ year, month }) => (
-          <CalendarMonth key={`${year}-${month}`} year={year} month={month} />
+          <CalendarMonth key={`${year}-${month}`} year={year} month={month} locale={locale} />
         ))}
       </div>
     </div>

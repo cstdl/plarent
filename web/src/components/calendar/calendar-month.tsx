@@ -1,17 +1,19 @@
 import { TaskDots, type TaskCounts } from "@/components/calendar/task-dots";
 import { WeekdayHeader } from "@/components/calendar/weekday-header";
 import { getMonthCells, toIsoDate } from "@/lib/calendar";
-import { locale } from "@/lib/i18n";
+import { type Locale } from "@/lib/i18n";
 
 type CalendarMonthProps = {
   year: number;
   month: number;
+  locale: Locale;
   taskCountsByDate?: Readonly<Record<string, TaskCounts>>;
 };
 
 export function CalendarMonth({
   year,
   month,
+  locale,
   taskCountsByDate = {},
 }: CalendarMonthProps) {
   const monthId = `month-${year}-${month + 1}`;
@@ -28,7 +30,7 @@ export function CalendarMonth({
       <h2 id={monthId} className="type-body mb-2 font-bold">
         {monthLabel}
       </h2>
-      <WeekdayHeader />
+      <WeekdayHeader locale={locale} />
       <div className="grid grid-cols-7">
         {getMonthCells(year, month).map((day, index) => {
           const date = day === null ? null : toIsoDate(year, month, day);
@@ -45,7 +47,7 @@ export function CalendarMonth({
                     {day}
                   </time>
                   <div className="mt-2">
-                    <TaskDots counts={counts ?? { overdue: 0, open: 0 }} />
+                    <TaskDots counts={counts ?? { overdue: 0, open: 0 }} locale={locale} />
                   </div>
                 </>
               ) : null}

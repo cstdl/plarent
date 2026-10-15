@@ -2,12 +2,13 @@
 
 import { useState, useTransition } from "react";
 import { Dialog } from "@/components/dialog";
-import { t } from "@/lib/i18n";
+import { useTranslations } from "@/lib/i18n";
 import { deletePlantAction } from "./actions";
 
 export function DeletePlantButton({ plantId, plantName }: { plantId: string; plantName: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const t = useTranslations();
 
   return (
     <>

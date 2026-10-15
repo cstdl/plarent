@@ -1,4 +1,4 @@
-import { t } from "@/lib/i18n";
+import { createTranslator, type Locale } from "@/lib/i18n";
 
 export type TaskCounts = {
   overdue: number;
@@ -7,11 +7,13 @@ export type TaskCounts = {
 
 type TaskDotsProps = {
   counts: TaskCounts;
+  locale: Locale;
 };
 
 const MAX_DOTS = 3;
 
-export function TaskDots({ counts }: TaskDotsProps) {
+export function TaskDots({ counts, locale }: TaskDotsProps) {
+  const t = createTranslator(locale);
   const overdueCount = Math.max(0, counts.overdue);
   const openCount = Math.max(0, counts.open);
   const total = overdueCount + openCount;

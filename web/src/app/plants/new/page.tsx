@@ -1,7 +1,9 @@
-import { t } from "@/lib/i18n";
+import { getTranslations } from "@/lib/i18n/server";
 import { createPlantAction } from "./actions";
 
-export default function NewPlantPage() {
+export default async function NewPlantPage() {
+  const t = await getTranslations();
+
   return (
     <div className="rounded-[14px] border border-secondary/30 bg-boxes-secondary p-6 shadow-[0_5px_16px_rgba(53,66,56,0.07)]">
       <h1 className="type-title text-primary">{t("plants.new.title")}</h1>

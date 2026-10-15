@@ -56,3 +56,10 @@ plants:
 error:
   title: Etwas ist schiefgelaufen
   retry: Erneut versuchen
+
+profile:
+  title: Mein Profil
+  language:
+    label: Sprache
+    en: English
+    de: Deutsch

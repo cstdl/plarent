@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { t } from "@/lib/i18n";
+import { useTranslations } from "@/lib/i18n";
 
 export function AppHeader() {
   const pathname = usePathname();
+  const t = useTranslations();
 
   if (pathname === "/") {
     return null;

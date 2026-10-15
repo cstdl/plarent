@@ -1,0 +1,80 @@
+common:
+  appName: Plarent
+  appTagline: Verwalte und pflege deine Zimmerpflanzen
+  addPlant: Pflanze hinzufügen
+  back: zurück
+  backToPlants: Zurück zu den Pflanzen
+  cancel: Abbrechen
+  home: Startseite
+  mainNavigation: Hauptnavigation
+  theme:
+    switchToLight: Zum hellen Modus wechseln
+    switchToDark: Zum dunklen Modus wechseln
+
+home:
+  greeting: "Guten Morgen, {{name}}!"
+  dayTitle: "Dein {{weekday}} bisher"
+  allDone: "Du hast alle Aufgaben für heute erledigt"
+
+nav:
+  myPlants: Meine Pflanzen
+  taskCalendar: Aufgaben-Kalender
+  plaerrPoints: Plärr-Points
+  myProfile: Mein Profil
+
+calendar:
+  title: Kalender
+  taskSingular: "{{count}} Aufgabe"
+  taskPlural: "{{count}} Aufgaben"
+
+plants:
+  list:
+    title: Meine Pflanzen
+    intro: "Leg los und füge deine erste Pflanze hinzu! 🌱 Dein grünes Abenteuer beginnt mit einem kleinen Schritt."
+    addPlant: neue Pflanze hinzufügen
+  detail:
+    notFound: Diese Pflanze wurde nicht gefunden.
+  new:
+    back: zurück
+    title: Neue Pflanze hinzufügen
+    intro: "Leg los und füge deine erste Pflanze hinzu! 🌱 Dein grünes Abenteuer beginnt mit einem kleinen Schritt."
+    addImage: Foto hinzufügen
+    namePlaceholder: Name der Pflanze
+    speciesPlaceholder: Art
+    locationPlaceholder: Standort
+    wateringLabel: "Diese Pflanze gießen:"
+    mistingLabel: "Diese Pflanze besprühen:"
+    every: alle
+    intervalAmount: Intervall
+    intervalUnit: Einheit
+    days: Tage
+    weeks: Wochen
+    save: Speichern
+  edit:
+    title: Pflanze bearbeiten
+    intro: "Aktualisiere die Details von {{name}}. 🌿"
+  delete:
+    button: Pflanze löschen
+    title: Pflanze löschen
+    confirmMessage: "Möchtest du {{name}} wirklich löschen? Dies kann nicht rückgängig gemacht werden."
+    confirm: Löschen
+    confirming: Wird gelöscht…
+
+error:
+  title: Etwas ist schiefgelaufen
+  retry: Erneut versuchen
+
+profile:
+  title: Mein Profil
+  stats:
+    plants: Pflanzen
+    points: Punkte
+    formerPlants: ehemalige Pflanzen
+  language:
+    label: Sprache
+    en: Englisch
+    de: Deutsch
+  appearance:
+    label: Darstellung
+    light: Hell
+    dark: Dunkel

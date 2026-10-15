@@ -37,48 +37,81 @@ describe("AppFooter", () => {
   it("renders four navigation links and a centered home logo", () => {
     render(<AppFooter />);
 
-    const nav = screen.getByRole("navigation", { name: "Main" });
+    const nav = screen.getByRole("navigation", { name: "Hauptnavigation" });
     const links = within(nav).getAllByRole("link");
 
     expect(links).toHaveLength(5);
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
-      "/",
+      "/plants",
       "/calendar",
       "/",
       "/points",
       "/profile",
     ]);
     expect(links.map((link) => link.textContent?.trim())).toEqual([
-      "My Plants",
-      "Task Calendar",
+      "Meine Pflanzen",
+      "Aufgaben-Kalender",
       "",
-      "Plärr Points",
-      "My Profile",
+      "Plärr-Points",
+      "Mein Profil",
     ]);
-    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
+    expect(screen.getByRole("link", { name: "Startseite" })).toHaveAttribute("href", "/");
+  });
+
+  it("uses the larger logo on the home screen", () => {
+    render(<AppFooter />);
+
+    const home = screen.getByRole("link", { name: "Startseite" });
+
+    expect(home).toHaveAttribute("aria-current", "page");
+    expect(home).toHaveClass("h-[65px]", "w-[71px]");
+    expect(screen.getByRole("link", { name: /Meine Pflanzen/ })).not.toHaveAttribute(
+      "aria-current",
+    );
+  });
+
+  it("uses the smaller logo and highlights the active tab away from home", () => {
+    usePathname.mockReturnValue("/profile");
+    render(<AppFooter />);
+
+    expect(screen.getByRole("link", { name: "Startseite" })).toHaveClass("h-[47px]", "w-[51px]");
+    expect(screen.getByRole("link", { name: /Mein Profil/ })).toHaveClass("text-highlight");
+  });
+
+  it("highlights My Plants on plant pages", () => {
+    usePathname.mockReturnValue("/plants/1");
+    render(<AppFooter />);
+
+    const myPlants = screen.getByRole("link", { name: /Meine Pflanzen/ });
+
+    expect(screen.getByRole("link", { name: "Startseite" })).toHaveClass(
+      "h-[47px]",
+      "w-[51px]",
+    );
+    expect(myPlants).toHaveAttribute("aria-current", "page");
+    expect(myPlants).toHaveClass("text-highlight");
   });
 
   it("marks the current page link as active", () => {
     usePathname.mockReturnValue("/profile");
     render(<AppFooter />);
 
-    const nav = screen.getByRole("navigation", { name: "Main" });
+    const nav = screen.getByRole("navigation", { name: "Hauptnavigation" });
 
-    expect(within(nav).getByRole("link", { name: /My Profile/ })).toHaveAttribute(
+    expect(within(nav).getByRole("link", { name: /Mein Profil/ })).toHaveAttribute(
       "aria-current",
       "page",
     );
-    expect(within(nav).getByRole("link", { name: /My Plants/ })).not.toHaveAttribute(
+    expect(within(nav).getByRole("link", { name: /Meine Pflanzen/ })).not.toHaveAttribute(
       "aria-current",
     );
   });
 
-  it("uses the lighter-green surface token with a dark-mode fallback", () => {
+  it("uses the tab bar color token", () => {
     const { container } = render(<AppFooter />);
     const footer = container.querySelector("footer");
 
-    expect(footer).toHaveClass("bg-[var(--color-lighter-green)]");
-    expect(footer).toHaveClass("dark:bg-stone-900");
-    expect(footer).toHaveClass("dark:border-stone-800");
+    expect(footer).toHaveClass("bg-tab-bar");
+    expect(footer).toHaveClass("text-primary");
   });
 });

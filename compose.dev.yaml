@@ -1,7 +1,9 @@
 # Hot-reload override for local development. Layer on top of compose.yaml:
 #   docker compose -f compose.yaml -f compose.dev.yaml up --build --watch
-# (or `task dev`). Source changes are synced into the containers; dependency
-# file changes trigger an image rebuild.
+# (or `task up`). Backend source changes are synced into the container; the web
+# app is bind-mounted so large change sets (branch switches, bulk edits) land
+# atomically instead of in partial sync batches. Dependency file changes
+# trigger an image rebuild.
 
 services:
   backend:
@@ -25,14 +27,13 @@ services:
   web:
     build:
       target: dev
+    volumes:
+      - ./web:/app
+      # Keep the container's Linux node_modules / build cache, not the host's macOS ones.
+      - /app/node_modules
+      - /app/.next
     develop:
       watch:
-        - action: sync
-          path: ./web
-          target: /app
-          ignore:
-            - node_modules/
-            - .next/
         - action: rebuild
           path: ./web/package.json
         - action: rebuild

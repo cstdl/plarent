@@ -2,12 +2,19 @@ common:
   appName: Plarent
   appTagline: Manage and care for your houseplants
   addPlant: Add plant
+  back: back
   backToPlants: Back to plants
   cancel: Cancel
   home: Home
+  mainNavigation: Main navigation
   theme:
     switchToLight: Switch to light mode
     switchToDark: Switch to dark mode
+
+home:
+  greeting: "Good morning {{name}}!"
+  dayTitle: "Your {{weekday}} so far"
+  allDone: "You've completed all your tasks for today"
 
 nav:
   myPlants: My Plants
@@ -15,26 +22,37 @@ nav:
   plaerrPoints: Plärr Points
   myProfile: My Profile
 
+calendar:
+  title: Calendar
+  taskSingular: "{{count}} task"
+  taskPlural: "{{count}} tasks"
+
 plants:
   list:
-    empty: No plants yet.
-    addFirst: Add your first plant
-    location: "📍 {{location}}"
+    title: My Plants
+    intro: "Get started and add your first plant! 🌱 Your green adventure begins with a small step."
+    addPlant: add new plant
   detail:
-    location: Location
-    acquired: Acquired
-    notes: Notes
     notFound: We couldn't find that plant.
   new:
-    title: Add a plant
-    nameLabel: Name
-    speciesLabel: Species
-    speciesPlaceholder: Monstera deliciosa
-    locationLabel: Location
-    locationPlaceholder: Living room window
-    acquiredDateLabel: Acquired date
-    notesLabel: Notes
-    save: Save plant
+    back: back
+    title: Add a new plant
+    intro: "Get started and add your first plant! 🌱 Your green adventure begins with a small step."
+    addImage: Add photo
+    namePlaceholder: Plant name
+    speciesPlaceholder: Species
+    locationPlaceholder: Location
+    wateringLabel: "Water this plant:"
+    mistingLabel: "Mist this plant:"
+    every: every
+    intervalAmount: Interval
+    intervalUnit: Unit
+    days: days
+    weeks: weeks
+    save: Save
+  edit:
+    title: Edit plant
+    intro: "Update the details of {{name}}. 🌿"
   delete:
     button: Delete plant
     title: Delete plant
@@ -45,3 +63,18 @@ plants:
 error:
   title: Something went wrong
   retry: Try again
+
+profile:
+  title: My Profile
+  stats:
+    plants: plants
+    points: points
+    formerPlants: former plants
+  language:
+    label: Language
+    en: English
+    de: German
+  appearance:
+    label: Appearance
+    light: Light
+    dark: Dark

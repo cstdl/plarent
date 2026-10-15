@@ -1,6 +1,9 @@
+import type { Locale } from "./config";
+import { de } from "./locales/de.generated";
 import { en } from "./locales/en.generated";
 
-type Translations = typeof en;
+type TranslationShape<T> = T extends string ? string : { [K in keyof T]: TranslationShape<T[K]> };
+type Translations = TranslationShape<typeof en>;
 
 type DotPaths<T> = T extends string
   ? never
@@ -8,11 +11,16 @@ type DotPaths<T> = T extends string
       [K in keyof T & string]: T[K] extends string ? K : `${K}.${DotPaths<T[K]>}`;
     }[keyof T & string];
 
+type DeepPartial<T> = T extends string ? string : { [K in keyof T]?: DeepPartial<T[K]> };
+
 export type TranslationKey = DotPaths<Translations>;
 
-const dictionary: Translations = en;
+export type Translator = (key: TranslationKey, params?: Record<string, string | number>) => string;
 
-function resolve(key: TranslationKey): string {
+// English is the source of truth; other locales may be incomplete and fall back to it per key.
+const dictionaries: Record<Locale, DeepPartial<Translations>> = { en, de };
+
+function lookup(dictionary: DeepPartial<Translations>, key: TranslationKey): string | undefined {
   const value = key.split(".").reduce<unknown>((node, segment) => {
     if (node && typeof node === "object" && segment in node) {
       return (node as Record<string, unknown>)[segment];
@@ -20,20 +28,28 @@ function resolve(key: TranslationKey): string {
     return undefined;
   }, dictionary);
 
-  if (typeof value !== "string") {
+  return typeof value === "string" ? value : undefined;
+}
+
+function resolve(locale: Locale, key: TranslationKey): string {
+  const value = lookup(dictionaries[locale], key) ?? lookup(en, key);
+
+  if (value === undefined) {
     throw new Error(`Missing translation for key "${key}"`);
   }
 
   return value;
 }
 
-export function t(key: TranslationKey, params?: Record<string, string | number>): string {
-  const template = resolve(key);
-  if (!params) {
-    return template;
-  }
+export function createTranslator(locale: Locale): Translator {
+  return (key, params) => {
+    const template = resolve(locale, key);
+    if (!params) {
+      return template;
+    }
 
-  return template.replace(/{{(\w+)}}/g, (match, token: string) =>
-    token in params ? String(params[token]) : match,
-  );
+    return template.replace(/{{(\w+)}}/g, (match, token: string) =>
+      token in params ? String(params[token]) : match,
+    );
+  };
 }

@@ -1,6 +1,7 @@
 package com.plarent.backend.plant
 
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.util.UUID
 
 @Service
@@ -21,6 +22,17 @@ class PlantService(
             acquiredDate = request.acquiredDate,
             notes = request.notes?.trim()?.ifBlank { null },
         )
+        return plantRepository.save(plant)
+    }
+
+    fun updatePlant(id: UUID, request: UpdatePlantRequest): Plant {
+        val plant = getPlant(id)
+        request.name?.let { plant.name = it.trim() }
+        request.species?.let { plant.species = it.trim() }
+        request.location?.let { plant.location = it.trim().ifBlank { null } }
+        request.acquiredDate?.let { plant.acquiredDate = it }
+        request.notes?.let { plant.notes = it.trim().ifBlank { null } }
+        plant.updatedAt = Instant.now()
         return plantRepository.save(plant)
     }
 

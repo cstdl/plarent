@@ -87,7 +87,6 @@ Run `task --list` to see all available tasks (backend/web dev, tests, etc.).
 
 - Web: http://localhost:3000
 - API: http://localhost:8080/api/plants
-- Postgres: localhost:5432 (credentials from `.env`)
 
 The web app is a Next.js server that calls the backend over the Docker network
 (`API_URL=http://backend:8080/api`), using Server Components for reads and a

@@ -31,7 +31,7 @@ class PlantRepositoryIntegrationTest {
     companion object {
         @Container
         @JvmStatic
-        val postgres = PostgreSQLContainer("postgres:16-alpine").apply {
+        val postgres = PostgreSQLContainer("postgres:18-alpine").apply {
             withDatabaseName("plarent")
             withUsername("plarent")
             withPassword("plarent")

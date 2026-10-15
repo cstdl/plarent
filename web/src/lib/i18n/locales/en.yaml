@@ -20,6 +20,9 @@ nav:
   plaerrPoints: Plärr Points
   myProfile: My Profile
 
+calendar:
+  title: Calendar
+
 plants:
   list:
     empty: No plants yet.

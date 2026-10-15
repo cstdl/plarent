@@ -49,7 +49,7 @@ export function AppFooter() {
   const isHome = pathname === "/";
 
   return (
-    <footer className="fixed inset-x-0 bottom-0 z-40 bg-tab-bar pb-[env(safe-area-inset-bottom)] text-primary">
+    <footer className="fixed inset-x-0 bottom-0 z-40 border-t-[20px] border-background bg-tab-bar pb-[env(safe-area-inset-bottom)] text-primary">
       <nav aria-label="Main" className="relative mx-auto grid h-[60px] max-w-3xl grid-cols-5 items-center">
         {LEFT_LINKS.map((item) => (
           <FooterLinkItem key={item.href} item={item} pathname={pathname} />

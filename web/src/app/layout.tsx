@@ -51,7 +51,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
-        <div className="min-h-screen pb-24">
+        <div className="min-h-screen pb-[calc(3rem+env(safe-area-inset-bottom))]">
           <AppHeader />
           <main className="mx-auto max-w-3xl px-page-x py-8">{children}</main>
           <AppFooter />

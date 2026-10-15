@@ -2,6 +2,7 @@ common:
   appName: Plarent
   appTagline: Manage and care for your houseplants
   addPlant: Add plant
+  back: back
   backToPlants: Back to plants
   cancel: Cancel
   home: Home
@@ -65,7 +66,15 @@ error:
 
 profile:
   title: My Profile
+  stats:
+    plants: plants
+    points: points
+    formerPlants: former plants
   language:
     label: Language
     en: English
-    de: Deutsch
+    de: German
+  appearance:
+    label: Appearance
+    light: Light
+    dark: Dark

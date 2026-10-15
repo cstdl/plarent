@@ -2,6 +2,7 @@ common:
   appName: Plarent
   appTagline: Verwalte und pflege deine Zimmerpflanzen
   addPlant: Pflanze hinzufügen
+  back: zurück
   backToPlants: Zurück zu den Pflanzen
   cancel: Abbrechen
   home: Startseite
@@ -65,7 +66,15 @@ error:
 
 profile:
   title: Mein Profil
+  stats:
+    plants: Pflanzen
+    points: Punkte
+    formerPlants: ehemalige Pflanzen
   language:
     label: Sprache
-    en: English
+    en: Englisch
     de: Deutsch
+  appearance:
+    label: Darstellung
+    light: Hell
+    dark: Dunkel

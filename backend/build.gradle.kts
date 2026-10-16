@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "2.0.21"
     kotlin("plugin.spring") version "2.0.21"
     kotlin("plugin.jpa") version "2.0.21"
+    id("org.graalvm.buildtools.native") version "0.10.3"
 }
 
 group = "com.plarent"
@@ -48,4 +49,18 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// Tests run on the JVM only (Mockito doesn't work in native images; the native
+// binary is covered by scripts/smoke-test.sh), so skip AOT-processing the test
+// contexts, which can't start Testcontainers-backed contexts at build time.
+tasks.named("processTestAot") {
+    enabled = false
+}
+
+graalvmNative {
+    binaries.named("main") {
+        // Default max heap for the native binary; override at runtime with -Xmx.
+        buildArgs.add("-R:MaxHeapSize=64m")
+    }
 }

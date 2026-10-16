@@ -11,10 +11,6 @@ COPY gradle ./gradle
 COPY build.gradle.kts settings.gradle.kts gradle.properties ./
 RUN chmod +x gradlew && ./gradlew --no-daemon dependencies > /dev/null 2>&1 || true
 
-FROM deps AS build
-COPY src ./src
-RUN ./gradlew --no-daemon clean bootJar -x test
-
 # Hot-reload dev image (used by compose.dev.yaml): continuous Gradle build +
 # Spring Boot DevTools restarts. Source is kept in sync by `docker compose watch`.
 FROM deps AS dev
@@ -24,10 +20,26 @@ COPY src ./src
 EXPOSE 8080
 ENTRYPOINT ["./dev-entrypoint.sh"]
 
-FROM eclipse-temurin:21-jre-alpine AS runtime
+# Production build: compile to a GraalVM native executable. Uses far less memory
+# than the JVM (~40 MiB vs ~240 MiB) and starts in well under a second, at the
+# cost of a slow, memory-hungry build (several minutes, ~7 GB peak).
+FROM ghcr.io/graalvm/native-image-community:21 AS build
+# gradlew needs xargs, which this Oracle Linux base image doesn't ship.
+RUN microdnf install -y findutils && microdnf clean all
 WORKDIR /app
-RUN addgroup -S plarent && adduser -S plarent -G plarent
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY gradlew ./
+COPY gradle ./gradle
+COPY build.gradle.kts settings.gradle.kts gradle.properties ./
+RUN chmod +x gradlew && ./gradlew --no-daemon dependencies > /dev/null 2>&1 || true
+COPY src ./src
+RUN ./gradlew --no-daemon nativeCompile -x test
+
+# The native binary links glibc and zlib dynamically, so distroless/base won't do.
+FROM debian:12-slim AS runtime
+WORKDIR /app
+RUN groupadd -r plarent && useradd -r -g plarent plarent
+COPY --from=build /app/build/native/nativeCompile/backend app
 USER plarent
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+# Max heap defaults to 64m (set at build time); pass e.g. -Xmx128m as the command to override.
+ENTRYPOINT ["/app/app"]
